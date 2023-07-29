@@ -14,7 +14,7 @@ export default function NasaPhoto() {
 
     const today=getTodayDateString();
     
-    const [date, setDate] = useState(today);
+    const [date, setDate] = useState(localStorage.getItem("selectedDate") || today);
 
     const setPreviousDate = () => {
         const currentDate = new Date(date);
@@ -50,18 +50,22 @@ export default function NasaPhoto() {
         }
     }, [date]);
 
+    useEffect(() => {
+        localStorage.setItem("selectedDate", date);
+    }, [date]);
+
     if (!photoData) return <div/>;
     return (
         <>
-            <Navbar />
+            <Navbar/>
             <div className="content">
                 <div className="content-info">
                     <h1 className="content-title">{photoData.title}</h1>
                     <div className="content-date">
                         <div className="content-change-date">
-                            <p className="content-change" onClick={setPreviousDate}><HiChevronLeft/></p>
+                            <p className="content-change" onClick={setPreviousDate}><HiChevronLeft size={22}/></p>
                             <p className="content-day">{photoData.date}</p>
-                            <p className="content-change" onClick={setNextDate}><HiChevronRight/></p>
+                            <p className="content-change" onClick={setNextDate}><HiChevronRight size={22}/></p>
                         </div>
                         <div className="content-input-date">
                             <p className="content-text">Choose a date</p>
@@ -70,20 +74,22 @@ export default function NasaPhoto() {
                     </div>
                     <p className="content-explanation">{photoData.explanation}</p>
                 </div>
-                {photoData.media_type === "image" ? (
-                    <img
-                        className="content-photo"
-                        src={photoData.url}
-                        alt={photoData.title}
-                    />
-                    ) : (
-                    <iframe
-                        className="content-video"
-                        title="space-video"
-                        src={photoData.url}
-                        frameBorder="0"
-                    />
-                )}
+                <a href={photoData.hdurl}>
+                    {photoData.media_type === "image" ? (
+                        <img
+                            className="content-photo"
+                            src={photoData.hdurl}
+                            alt={photoData.title}
+                        />
+                        ) : (
+                        <iframe
+                            className="content-video"
+                            title="space-video"
+                            src={photoData.url}
+                            frameBorder="0"
+                        />
+                    )}
+                </a>
             </div>
         </>
     );
