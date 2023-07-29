@@ -6,7 +6,14 @@ const apiKey = process.env.REACT_APP_NASA_KEY;
 
 export default function NasaPhoto() {
     const [photoData, setPhotoData] = useState(null);
-    const [date, setDate] = useState(null);
+    const getTodayDateString = () => {
+        const today = new Date();
+        return today.toISOString().slice(0, 10);
+    };
+
+    const today=getTodayDateString();
+    
+    const [date, setDate] = useState(today);
 
     const changeDate = (e) => {
         setDate(e.target.value);
@@ -35,7 +42,7 @@ export default function NasaPhoto() {
                         <p className="content-day">{photoData.date}</p>
                         <div className="content-input-date">
                             <p className="content-text">Choose a date</p>
-                            <input className="content-input" type="date" value={date} onChange={changeDate}></input>
+                            <input className="content-input" type="date" value={date} onChange={changeDate} max={today}></input>
                         </div>
                     </div>
                     <p className="content-explanation">{photoData.explanation}</p>
