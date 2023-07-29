@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
+import {HiChevronRight, HiChevronLeft} from "react-icons/hi";
 
 const apiKey = process.env.REACT_APP_NASA_KEY;
 
@@ -14,6 +15,24 @@ export default function NasaPhoto() {
     const today=getTodayDateString();
     
     const [date, setDate] = useState(today);
+
+    const setPreviousDate = () => {
+        const currentDate = new Date(date);
+        currentDate.setDate(currentDate.getDate() - 1);
+        const previousDate = currentDate.toISOString().slice(0, 10);
+        setDate(previousDate);
+    };
+    
+    const setNextDate = () => {
+        const currentDate = new Date(date);
+        currentDate.setDate(currentDate.getDate() + 1);
+        const todayDate = new Date(today);
+        if (currentDate > todayDate) {
+            return;
+        }
+        const nextDate = currentDate.toISOString().slice(0, 10);
+        setDate(nextDate);
+    };
 
     const changeDate = (e) => {
         setDate(e.target.value);
@@ -39,7 +58,11 @@ export default function NasaPhoto() {
                 <div className="content-info">
                     <h1 className="content-title">{photoData.title}</h1>
                     <div className="content-date">
-                        <p className="content-day">{photoData.date}</p>
+                        <div className="content-change-date">
+                            <p className="content-change" onClick={setPreviousDate}><HiChevronLeft/></p>
+                            <p className="content-day">{photoData.date}</p>
+                            <p className="content-change" onClick={setNextDate}><HiChevronRight/></p>
+                        </div>
                         <div className="content-input-date">
                             <p className="content-text">Choose a date</p>
                             <input className="content-input" type="date" value={date} onChange={changeDate} max={today}></input>

@@ -72,8 +72,18 @@ body{
             justify-content: space-between;
             color: rgb(211, 49, 49);
             
-            .content-day{
-                color: rgb(211, 49, 49);
+            .content-change-date{
+                display: flex;
+                gap: 10px;
+                .content-change{
+                    color: rgb(238, 226, 210);
+                    cursor: pointer;
+                    align-items: center;
+                }
+        
+                .content-day{
+                    color: rgb(211, 49, 49);
+                }
             }
             
             .content-input-date{
@@ -87,7 +97,8 @@ body{
                 
                 .content-input{
                     height: 18px;
-                    width: 17px;
+                    // width: 17px;
+                    cursor: pointer;
                 }
             }
         }
