@@ -74,7 +74,7 @@ export default function NasaPhoto() {
                     </div>
                     <p className="content-explanation">{photoData.explanation}</p>
                 </div>
-                <a href={photoData.hdurl}>
+                <a className="content-details" href={photoData.hdurl}>
                     {photoData.media_type === "image" ? (
                         <img
                             className="content-photo"
